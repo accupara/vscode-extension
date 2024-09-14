@@ -1,2 +1,1 @@
-# vscode-extension
-Crave vscode extension to simplify accessing Crave Devspaces
+# Crave Devspaces — Simplify accessing Crave Devspaces through VSCode
