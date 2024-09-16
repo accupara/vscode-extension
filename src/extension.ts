@@ -12,39 +12,52 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('craveDevspaces.helloWorld', () => {
-			vscode.window.showInformationMessage('Hello World from Crave Devspaces!');
+		vscode.commands.registerCommand('craveDevspaces.devspaceConnect', () => {
+			provider.updateOutput('Executing command: crave devspace');
+
+			exec('~/Documents/work/crv/crave -c ~/Documents/work/crv/conf/crave.mkams9.conf devspace', (error, stdout, stderr) => {
+				if (error) {
+					// console.error(error);
+					provider.updateOutput(stderr);
+				} else {
+					// console.log(stdout);
+					provider.updateOutput(stdout);
+				}
+			});
 		})
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('craveDevspaces.executeLs', () => {
-			provider.updateOutput('Executing command...');
-			// Execute the command without showing the terminal
-			exec('ls -lha', (error, stdout, stderr) => {
-			  if (error) {
-				console.error(error);
-				provider.updateOutput(`Error: ${stderr}`);
-			  } else {
-				// console.log(stdout);
-				provider.updateOutput(stdout);
-			  }
+		vscode.commands.registerCommand('craveDevspaces.craveCloneList', () => {
+			provider.updateOutput('Executing command: crave clone list');
+
+			exec('crave clone list', (error, stdout, stderr) => {
+				if (error) {
+					// console.error(error);
+					provider.updateOutput(stderr);
+				} else {
+					// console.log(stdout);
+					provider.updateOutput(stdout);
+				}
 			});
 		})
 	);
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('craveDevspaces.craveList', () => {
-			// Create a new terminal or use an existing one
-			let terminal = vscode.window.activeTerminal;
-			if (!terminal) {
-			  // If no active terminal, create a new one
-			  terminal = vscode.window.createTerminal('Crave Terminal');
-			}
-		
-			// Show the terminal and run the command
-			terminal.show(true); // Show the terminal and bring it to front
-			terminal.sendText('crave list'); // Send the command to be executed
+			provider.updateOutput('Executing command: crave list');
+
+			// ~/Documents/work/crv/crave -c ~/Documents/work/crv/conf/crave.mkams9.conf list
+
+			exec('crave list', (error, stdout, stderr) => {
+				if (error) {
+					// console.error(error);
+					provider.updateOutput(stderr);
+				} else {
+					// console.log(stdout);
+					provider.updateOutput(stdout);
+				}
+			});
 		})
 	);
 }

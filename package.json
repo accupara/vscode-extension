@@ -17,15 +17,15 @@
   "contributes": {
     "commands": [
       {
-        "command": "craveDevspaces.helloWorld",
-        "title": "Hello World"
+          "command": "craveDevspaces.devspaceConnect",
+          "title": "Devspace Connect"
       }, {
-        "command": "craveDevspaces.executeLs",
-        "title": "Execute ls -lha"
+        "command": "craveDevspaces.craveCloneList",
+        "title": "Crave Clone List"
       }, {
         "command": "craveDevspaces.craveList",
-        "title": "Execute crave list"
-      }
+        "title": "Crave List"
+    }
     ],
     "viewsContainers": {
       "activitybar": [
@@ -41,7 +41,7 @@
         {
           "type": "webview",
           "id": "craveDevspaces.mySidebarView",
-          "name": "My Sidebar"
+          "name": ""
         }
       ]
     }

@@ -1,1 +1,3 @@
-# Crave Devspaces — Simplify accessing Crave Devspaces through VSCode
+## Crave Devspaces VSCode Extension
+
+### Simplify accessing Crave Devspaces through VSCode

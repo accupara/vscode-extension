@@ -1,21 +1,24 @@
 //@ts-check
 
-// This script will be run within the webview itself
-// It cannot access the main VS Code APIs directly.
 (function () {
-    // const vscode = acquireVsCodeApi();
+    // @ts-ignore
+    const vscode = acquireVsCodeApi();
 
-    // const oldState = vscode.getState() || { colors: [] };
+    // @ts-ignore
+    document.querySelector('.crave-connect-button').addEventListener('click', () => {
+        vscode.postMessage({ command: 'devspaceConnect' });
+    });
 
-    // /** @type {Array<{ value: string }>} */
-    // let colors = oldState.colors;
+    // @ts-ignore
+    document.querySelector('.crave-clone-list-button').addEventListener('click', () => {
+        vscode.postMessage({ command: 'craveCloneList' });
+    });
 
-    // updateColorList(colors);
+    // @ts-ignore
+    document.querySelector('.crave-list-button').addEventListener('click', () => {
+        vscode.postMessage({ command: 'craveList' });
+    });
 
-    // document.querySelector('.add-color-button').addEventListener('click', () => {
-    //     addColor();
-    // });
-    
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', event => {
         const message = event.data; // The json data that the extension sent
