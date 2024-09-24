@@ -25,13 +25,13 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
 
         // Listen to messages from the webview if needed
         webviewView.webview.onDidReceiveMessage((message) => {
-            if (message.command === 'devspaceConnect') {
-                vscode.commands.executeCommand('craveDevspaces.devspaceConnect');
-            } else if (message.command === 'craveCloneList') {
+            if (message.command === 'craveCloneList') {
                 vscode.commands.executeCommand('craveDevspaces.craveCloneList');
             } else if (message.command === 'craveList') {
-              vscode.commands.executeCommand('craveDevspaces.craveList');
-          }
+                vscode.commands.executeCommand('craveDevspaces.craveList');
+            } else if (message.command === 'craveClone') {
+                vscode.commands.executeCommand('craveDevspaces.craveClone', message.projectId, message.destination);
+            }
         });
     }
 
@@ -57,23 +57,31 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
                 <link href="${styleResetUri}" rel="stylesheet">
                 <link href="${styleVSCodeUri}" rel="stylesheet">
                 <link href="${styleMainUri}" rel="stylesheet">
-        
             </head>
             <body>
+                <div class="progress-line-container hide">
+                    <div class="progress-line"></div>
+                </div>
                 <div class="welcome-view-content">
-                    <p>Connect to your devspace and start cloning your projects.</p>
-                    <div class="button-container">
-                      <button role="button" class="crave-connect-button">Devspace Connect</button>
-                    </div>
-                    <div class="button-container">
-                      <button role="button" class="crave-clone-list-button">Crave Clone List</button>
-                    </div>
-                    <div class="button-container">
-                      <button role="button" class="crave-list-button">Crave List</button>
+                    <div class="message-view hide"></div>
+
+                    <div class="project-view"></div>
+
+                    <div class="clone-view"></div>
+
+                    <div class="default-view">
+                        <p>Welcome to Crave Devspaces!</p>
+                        <p>Checkout the project repos available to clone or already cloned:</p>
+                    
+                        <div class="button-container">
+                            <button role="button" class="crave-clone-list-button">Crave Clone List</button>
+                        </div>
+                        
+                        <div class="button-container">
+                            <button role="button" class="crave-list-button">Crave List</button>
+                        </div>
                     </div>
                 </div>
-                
-                <pre id="output" />
 
                 <script nonce="${nonce}" src="${scriptUri}"></script>
             </body>
@@ -82,9 +90,9 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
     }
 
     // Function to send command output to the webview
-    public updateOutput(output: string) {
+    public updateOutput(command: string, output: string) {
         if (this._view) {
-            this._view.webview.postMessage({ command: 'updateOutput', output });
+            this._view.webview.postMessage({ command: command || 'updateOutput', output });
         }
     }
 }

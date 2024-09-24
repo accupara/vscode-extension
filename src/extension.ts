@@ -12,32 +12,16 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('craveDevspaces.devspaceConnect', () => {
-			provider.updateOutput('Executing command: crave devspace');
-
-			exec('~/Documents/work/crv/crave -c ~/Documents/work/crv/conf/crave.mkams9.conf devspace', (error, stdout, stderr) => {
-				if (error) {
-					// console.error(error);
-					provider.updateOutput(stderr);
-				} else {
-					// console.log(stdout);
-					provider.updateOutput(stdout);
-				}
-			});
-		})
-	);
-
-	context.subscriptions.push(
 		vscode.commands.registerCommand('craveDevspaces.craveCloneList', () => {
-			provider.updateOutput('Executing command: crave clone list');
+			provider.updateOutput('craveCloneList', 'Executing command: crave clone list');
 
 			exec('crave clone list', (error, stdout, stderr) => {
 				if (error) {
 					// console.error(error);
-					provider.updateOutput(stderr);
+					provider.updateOutput('craveCloneList', stderr);
 				} else {
 					// console.log(stdout);
-					provider.updateOutput(stdout);
+					provider.updateOutput('craveCloneList', stdout);
 				}
 			});
 		})
@@ -45,17 +29,35 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('craveDevspaces.craveList', () => {
-			provider.updateOutput('Executing command: crave list');
+			provider.updateOutput('craveList', 'Executing command: crave list');
 
 			// ~/Documents/work/crv/crave -c ~/Documents/work/crv/conf/crave.mkams9.conf list
 
 			exec('crave list', (error, stdout, stderr) => {
 				if (error) {
 					// console.error(error);
-					provider.updateOutput(stderr);
+					provider.updateOutput('craveList', stderr);
 				} else {
 					// console.log(stdout);
-					provider.updateOutput(stdout);
+					provider.updateOutput('craveList', stdout);
+				}
+			});
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('craveDevspaces.craveClone', (projectId, destination) => {
+			let command = `crave clone create --projectID ${projectId} /crave-devspaces/${destination}`;
+			
+			provider.updateOutput('craveClone', `Executing command: ${command}`);
+
+			exec(command, (error, stdout, stderr) => {
+				if (error) {
+					// console.error(error);
+					provider.updateOutput('craveClone', stderr);
+				} else {
+					// console.log(stdout);
+					provider.updateOutput('craveClone', stdout);
 				}
 			});
 		})

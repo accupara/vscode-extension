@@ -1,20 +1,25 @@
 body { 
     /* font-family: Arial, sans-serif; 5 */
+    height: 100%;
     padding: 0; 
 }
-pre { 
-    padding: 10px 0; 
-    border-radius: 4px; 
-    text-wrap: wrap; 
+.hide {
+    display: none;
 }
 .welcome-view-content {
-    align-items: center;
+    /* align-items: center; */
+    height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 0 20px 1em;
+    padding: 0 0 1em;
+    background-color: rgb(24, 24, 24);
 }
-.welcome-view-content>* {
+/* .welcome-view-content:focus {
+    border: 1px solid var(--vscode-focusBorder);
+} */
+.welcome-view-content>*,
+.welcome-view-content>.default-view>* {
     margin-block-end: 0;
     margin-block-start: 1em;
     margin-inline-end: 0;
@@ -23,11 +28,17 @@ pre {
 .welcome-view-content p {
     width: 100%;
 }
-.welcome-view-content>.button-container {
+.welcome-view-content pre { 
+    width: 100%;
+    padding: 10px 0; 
+    border-radius: 4px; 
+    text-wrap: wrap; 
+}
+.welcome-view-content .button-container {
     max-width: 300px;
     width: 100%;
 }
-.welcome-view-content>.button-container>button {
+.welcome-view-content .button-container>button {
     align-items: center;
     border: 1px solid var(--vscode-button-border, transparent);
     border-radius: 2px;
@@ -39,4 +50,94 @@ pre {
     padding: 4px;
     text-align: center;
     width: 100%;
+}
+/* Progress bar container */
+.progress-line-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+    overflow: hidden;
+    margin: 0;
+}
+/* Blue moving progress line */
+.progress-line {
+    position: absolute;
+    height: 2px;
+    width: 5%;  /* Line width */
+    background-color: #0078d7;  /* VSCode blue */
+    animation: moveLine 4s linear infinite;
+}
+
+/* Animation to simulate the passing line */
+@keyframes moveLine {
+    0% {
+        left: -10%;  /* Start outside on the left */
+    }
+    100% {
+        left: 100%;  /* Move to the right and exit */
+    }
+}
+.default-view,
+.message-view {
+    padding: 0 15px;
+}
+.message-view {
+    background-color: var(--vscode-textPreformat-background);
+    padding: 15px;
+    margin: 0;
+}
+.project-view h2,
+.clone-view h2 {
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+.project-view ul,
+.clone-view ul {
+    padding: 0;
+    list-style: none;
+    word-break: break-all;
+}
+.project-view ul li.row,
+.clone-view ul li.row {
+    padding: 12px 15px;
+    cursor: pointer;
+    display: flex;
+}
+.project-view ul li.row:not(:first-child),
+.clone-view ul li.row:not(:first-child) {
+    border-top: 1px solid var(--vscode-sideBarSectionHeader-border);
+}
+.project-view ul li.row:hover,
+.clone-view ul li.row:hover {
+    background-color: var(--vscode-list-hoverBackground);
+}
+.project-view ul div.preview,
+.clone-view ul div.preview {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-right: 15px;
+    overflow: hidden;
+}
+.project-view ul div.preview>span:first-child,
+.clone-view ul div.preview>span:first-child {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.project-view ul div.preview>span:not(:first-child),
+.clone-view ul div.preview>span:not(:first-child) {
+    color: var(--vscode-descriptionForeground);
+    line-height: normal;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.project-view ul div.options > button,
+.clone-view ul div.options > button {
+    width: auto;
+    padding: 2px 5px;
+    border-radius: 2px;
 }

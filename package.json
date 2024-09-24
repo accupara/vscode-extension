@@ -3,8 +3,8 @@
   "displayName": "Crave Devspaces",
   "description": "Simplify accessing Crave Devspaces",
   "publisher": "crave-vscode-extensions",
-	"private": true,
-	"license": "MIT",
+  "private": true,
+  "license": "MIT",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.92.0"
@@ -17,15 +17,17 @@
   "contributes": {
     "commands": [
       {
-          "command": "craveDevspaces.devspaceConnect",
-          "title": "Devspace Connect"
-      }, {
         "command": "craveDevspaces.craveCloneList",
         "title": "Crave Clone List"
-      }, {
+      },
+      {
         "command": "craveDevspaces.craveList",
         "title": "Crave List"
-    }
+      },
+      {
+        "command": "craveDevspaces.craveClone",
+        "title": "Crave Clone"
+      }
     ],
     "viewsContainers": {
       "activitybar": [
@@ -58,17 +60,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.92.0",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
+    "@types/vscode": "^1.92.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.11.0",
-    "eslint": "^8.57.0",
-    "typescript": "^5.4.5",
-    "ts-loader": "^9.5.1",
-    "webpack": "^5.92.1",
-    "webpack-cli": "^5.1.4",
     "@vscode/test-cli": "^0.0.9",
-    "@vscode/test-electron": "^2.4.0"
+    "@vscode/test-electron": "^2.4.0",
+    "eslint": "^8.57.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
   }
 }
