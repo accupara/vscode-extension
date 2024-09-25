@@ -68,7 +68,7 @@
                                 return p;
                             });
                             
-                            updateListViews(v.prows, 'project');
+                            updateListViews(v.prows, 'project', message.command === 'craveList');
 
                             updateListViews(v.crows, 'clone');
 
@@ -101,7 +101,7 @@
         }
     }
 
-    function updateListViews(rows, type) {
+    function updateListViews(rows, type, noOptions) {
         const view = document.querySelector(`.${type}-view`);
         if (view && rows.length) {
             view.textContent = '';
@@ -134,38 +134,40 @@
 
                 preview.appendChild(name);
                 preview.appendChild(url);
-
-                const options = document.createElement('div');
-                options.className = `options`;
-
-                const cloneButton = document.createElement('button');
-                cloneButton.textContent = type === 'project' ? 'Clone' : 'Destroy';
-
-                if (type === 'project') {
-                    cloneButton.addEventListener('click', () => {
-                        let 
-                            parts = row[2].split('/'),
-                            dest = parts[parts.length-1].replace('.git', '');
-                        
-                        toggleProgressLine(true);
-                        vscode.postMessage({ command: 'craveClone', projectId: row[0], destination: dest });
-                    });
-                }
-                else if (type === 'clone') {
-                    cloneButton.addEventListener('click', () => {
-                        let 
-                            parts = row[2].split('/'),
-                            dest = parts[parts.length-1];
-
-                        toggleProgressLine(true);
-                        vscode.postMessage({ command: 'craveCloneDestroy', destination: dest });
-                    });
-                }
-
-                options.appendChild(cloneButton);
-
                 li.appendChild(preview);
-                li.appendChild(options);
+
+                if (!noOptions) {
+                    const options = document.createElement('div');
+                    options.className = `options`;
+
+                    const cloneButton = document.createElement('button');
+                    cloneButton.textContent = type === 'project' ? 'Clone' : 'Destroy';
+
+                    if (type === 'project') {
+                        cloneButton.addEventListener('click', () => {
+                            let 
+                                parts = row[2].split('/'),
+                                dest = parts[parts.length-1].replace('.git', '');
+                            
+                            toggleProgressLine(true);
+                            vscode.postMessage({ command: 'craveClone', projectId: row[0], destination: dest });
+                        });
+                    }
+                    else if (type === 'clone') {
+                        cloneButton.addEventListener('click', () => {
+                            let 
+                                parts = row[2].split('/'),
+                                dest = parts[parts.length-1];
+
+                            toggleProgressLine(true);
+                            vscode.postMessage({ command: 'craveCloneDestroy', destination: dest });
+                        });
+                    }
+
+                    options.appendChild(cloneButton);
+                    li.appendChild(options);
+                }
+                
                 ul.appendChild(li);
             }
 
