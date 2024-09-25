@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { SidebarViewProvider } from './SidebarViewProvider';
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "crave-devspaces" is now active!');
@@ -58,6 +58,24 @@ export function activate(context: vscode.ExtensionContext) {
 				} else {
 					// console.log(stdout);
 					provider.updateOutput('craveClone', stdout);
+				}
+			});
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('craveDevspaces.craveCloneDestroy', (destination) => {
+			let command = `crave clone destroy -y /crave-devspaces/${destination}`;
+			
+			provider.updateOutput('craveCloneDestroy', `Executing command: ${command}`);
+
+			exec(command, (error, stdout, stderr) => {
+				if (error) {
+					// console.error(error);
+					provider.updateOutput('craveCloneDestroy', stderr);
+				} else {
+					// console.log(stdout);
+					provider.updateOutput('craveCloneDestroy', stdout);
 				}
 			});
 		})

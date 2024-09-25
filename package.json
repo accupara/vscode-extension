@@ -27,6 +27,10 @@
       {
         "command": "craveDevspaces.craveClone",
         "title": "Crave Clone"
+      },
+      {
+        "command": "craveDevspaces.craveCloneDestroy",
+        "title": "Crave Clone Destroy"
       }
     ],
     "viewsContainers": {

@@ -12,10 +12,12 @@
     }
 
     document.querySelector('.crave-clone-list-button').addEventListener('click', () => {
+        toggleProgressLine(true);
         vscode.postMessage({ command: 'craveCloneList' });
     });
 
     document.querySelector('.crave-list-button').addEventListener('click', () => {
+        toggleProgressLine(true);
         vscode.postMessage({ command: 'craveList' });
     });
 
@@ -66,13 +68,9 @@
                                 return p;
                             });
                             
-                            if (v.prows.length) {
-                                updateListViews(v.prows, 'project');
-                            }
+                            updateListViews(v.prows, 'project');
 
-                            if (v.crows.length) {
-                                updateListViews(v.crows, 'clone');
-                            }
+                            updateListViews(v.crows, 'clone');
 
                             updateMessageView();
                         }
@@ -83,7 +81,9 @@
                     break;
                 }
             case 'craveClone':
+            case 'craveCloneDestroy':
             default: 
+                toggleProgressLine();
                 updateMessageView(message.output);
         }
     });
@@ -141,15 +141,26 @@
                 const cloneButton = document.createElement('button');
                 cloneButton.textContent = type === 'project' ? 'Clone' : 'Destroy';
 
-                cloneButton.addEventListener('click', () => {
-                    let 
-                        parts = row[2].split('/'),
-                        dest = parts[parts.length-1].replace('.git', '');
-                    
-                    updateMessageView(`${cloneButton.textContent}: ${row[0]}, ${dest}, ${row[1]}, ${row[2]}`);
+                if (type === 'project') {
+                    cloneButton.addEventListener('click', () => {
+                        let 
+                            parts = row[2].split('/'),
+                            dest = parts[parts.length-1].replace('.git', '');
+                        
+                        toggleProgressLine(true);
+                        vscode.postMessage({ command: 'craveClone', projectId: row[0], destination: dest });
+                    });
+                }
+                else if (type === 'clone') {
+                    cloneButton.addEventListener('click', () => {
+                        let 
+                            parts = row[2].split('/'),
+                            dest = parts[parts.length-1];
 
-                    vscode.postMessage({ command: 'craveClone', projectId: row[0], destination: dest });
-                });
+                        toggleProgressLine(true);
+                        vscode.postMessage({ command: 'craveCloneDestroy', destination: dest });
+                    });
+                }
 
                 options.appendChild(cloneButton);
 
@@ -166,14 +177,22 @@
                 ...oldState,
                 [`${type}s`]: rows 
             });
+        } else {
+            view.textContent = '';
+            // Update the saved state
+            const oldState = vscode.getState() || { projects: [], clones: [] };
+            vscode.setState({ 
+                ...oldState,
+                [`${type}s`]: [] 
+            });
         }
     }
 
-    function toggleProgressLine() {
+    function toggleProgressLine(reset) {
         let progressLine = document.querySelector('.progress-line-container');
 
         if (progressLine) {
-            if (progressLine.className === 'progress-line-container') {
+            if (progressLine.className === 'progress-line-container' || reset) {
                 progressLine.className = 'progress-line-container hide';
             }
             else {

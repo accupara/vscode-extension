@@ -31,6 +31,8 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
                 vscode.commands.executeCommand('craveDevspaces.craveList');
             } else if (message.command === 'craveClone') {
                 vscode.commands.executeCommand('craveDevspaces.craveClone', message.projectId, message.destination);
+            } else if (message.command === 'craveCloneDestroy') {
+                vscode.commands.executeCommand('craveDevspaces.craveCloneDestroy', message.destination);
             }
         });
     }
