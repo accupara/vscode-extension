@@ -2,10 +2,14 @@
   "name": "crave-devspaces",
   "displayName": "Crave Devspaces",
   "description": "Simplify accessing Crave Devspaces",
-  "publisher": "crave-vscode-extensions",
+  "publisher": "crave-io",
   "private": true,
   "license": "MIT",
   "version": "0.0.1",
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/accupara/vscode-extension"
+	},
   "engines": {
     "vscode": "^1.92.0"
   },
