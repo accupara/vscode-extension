@@ -68,11 +68,15 @@
                                 return p;
                             });
                             
-                            updateListViews(v.prows, 'project', message.command === 'craveList');
+                            if (v.labels && v.labels.length) {
+                                updateListViews(v.prows, 'project', message.command === 'craveList');
 
-                            updateListViews(v.crows, 'clone');
+                                updateListViews(v.crows, 'clone');
 
-                            updateMessageView();
+                                updateMessageView();
+                            } else {
+                                updateMessageView(parts[parts.length-1], true);
+                            }
                         }
                         else {
                             updateMessageView(message.output);
@@ -88,11 +92,18 @@
         }
     });
 
-    function updateMessageView(message) {
+    function updateMessageView(message, preformatted) {
         let container = document.querySelector('.message-view');
         
         if (container && message) {
-            container.textContent = message;
+            if (preformatted) {
+                const pre = document.createElement('pre');
+                pre.textContent = message;
+                container.appendChild(pre);
+            } else {
+                container.textContent = message;
+            }
+
             container.className = 'message-view';
         }
         else if (container) {
@@ -172,22 +183,17 @@
             }
 
             view.appendChild(ul);
-
-            // Update the saved state
-            const oldState = vscode.getState() || { projects: [], clones: [] };
-            vscode.setState({ 
-                ...oldState,
-                [`${type}s`]: rows 
-            });
         } else {
             view.textContent = '';
-            // Update the saved state
-            const oldState = vscode.getState() || { projects: [], clones: [] };
-            vscode.setState({ 
-                ...oldState,
-                [`${type}s`]: [] 
-            });
+            view.className = `${type}-view hide`;
         }
+
+        // Update the saved state
+        const oldState = vscode.getState() || { projects: [], clones: [] };
+        vscode.setState({ 
+            ...oldState,
+            [`${type}s`]: rows || [],
+        });
     }
 
     function toggleProgressLine(reset) {

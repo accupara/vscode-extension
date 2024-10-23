@@ -1,10 +1,8 @@
 import * as vscode from 'vscode';
 import { SidebarViewProvider } from './SidebarViewProvider';
-import { exec, spawn } from 'child_process';
+import { exec } from 'child_process';
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('Congratulations, your extension "crave-devspaces" is now active!');
-
 	const provider = new SidebarViewProvider(context.extensionUri);
 	
 	context.subscriptions.push(
@@ -30,8 +28,6 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('craveDevspaces.craveList', () => {
 			provider.updateOutput('craveList', 'Executing command: crave list');
-
-			// ~/Documents/work/crv/crave -c ~/Documents/work/crv/conf/crave.mkams9.conf list
 
 			exec('crave list', (error, stdout, stderr) => {
 				if (error) {

@@ -16,6 +16,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 0 0 1em;
+    margin: 0;
     background-color: rgb(24, 24, 24);
 }
 /* .welcome-view-content:focus {
@@ -33,9 +34,9 @@ body {
 }
 .welcome-view-content pre { 
     width: 100%;
-    padding: 10px 0; 
-    border-radius: 4px; 
-    text-wrap: wrap; 
+    border-radius: 4px;
+    text-wrap: wrap;
+    word-break: break-word;
 }
 .welcome-view-content .button-container {
     max-width: 300px;
@@ -56,13 +57,14 @@ body {
 }
 /* Progress bar container */
 .progress-line-container {
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
     height: 2px;
     background-color: transparent;
     overflow: hidden;
     margin: 0;
+    z-index: 1;
 }
 /* Blue moving progress line */
 .progress-line {
@@ -87,9 +89,12 @@ body {
     padding: 0 15px;
 }
 .message-view {
-    background-color: var(--vscode-textPreformat-background);
-    padding: 15px;
-    margin: 0;
+    position: fixed;
+    width: 96%;
+    margin: 2%;
+    padding: 12px 15px;
+    background: rgb(37, 37, 38);
+    box-shadow: rgba(0, 0, 0, 0.36) 0px 0px 8px 2px;
 }
 .project-view h2,
 .clone-view h2 {
