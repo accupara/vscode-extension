@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { SidebarViewProvider } from './SidebarViewProvider';
 import { exec } from 'child_process';
 
@@ -74,6 +75,20 @@ export function activate(context: vscode.ExtensionContext) {
 					provider.updateOutput('craveCloneDestroy', stdout);
 				}
 			});
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('craveDevspaces.openFolder', (folderPath: string) => {
+			provider.updateOutput('openFolder', `Opening folder: ${folderPath}`);
+
+			try {
+				const folderUri = vscode.Uri.file(path.resolve(folderPath));
+				vscode.commands.executeCommand('vscode.openFolder', folderUri, false);
+				vscode.commands.executeCommand('workbench.view.explorer');
+			} catch (err:any) {
+				provider.updateOutput('openFolder', err);
+			}
 		})
 	);
 }

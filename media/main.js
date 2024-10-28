@@ -86,6 +86,7 @@
                 }
             case 'craveClone':
             case 'craveCloneDestroy':
+            case 'openFolder':
             default: 
                 toggleProgressLine();
                 updateMessageView(message.output);
@@ -173,6 +174,15 @@
                             toggleProgressLine(true);
                             vscode.postMessage({ command: 'craveCloneDestroy', destination: dest });
                         });
+
+                        const openButton = document.createElement('button');
+                        openButton.textContent = "Open Folder";
+
+                        openButton.addEventListener('click', () => {
+                            vscode.postMessage({ command: 'openFolder', folderPath: row[2] });
+                        });
+
+                        options.appendChild(openButton);
                     }
 
                     options.appendChild(cloneButton);

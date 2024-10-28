@@ -35,6 +35,10 @@
       {
         "command": "craveDevspaces.craveCloneDestroy",
         "title": "Crave Clone Destroy"
+      },
+      {
+        "command": "craveDevspaces.openFolder",
+        "title": "Open Folder"
       }
     ],
     "viewsContainers": {
