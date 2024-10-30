@@ -26,7 +26,7 @@ export class SidebarViewProvider implements vscode.WebviewViewProvider {
         // Listen to messages from the webview if needed
         webviewView.webview.onDidReceiveMessage((message) => {
             if (message.command === 'craveCloneList') {
-                vscode.commands.executeCommand('craveDevspaces.craveCloneList');
+                vscode.commands.executeCommand('craveDevspaces.craveCloneList', message.noLog);
             } else if (message.command === 'craveList') {
                 vscode.commands.executeCommand('craveDevspaces.craveList');
             } else if (message.command === 'craveClone') {

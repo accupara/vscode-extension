@@ -11,8 +11,10 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('craveDevspaces.craveCloneList', () => {
-			provider.updateOutput('craveCloneList', 'Executing command: crave clone list');
+		vscode.commands.registerCommand('craveDevspaces.craveCloneList', (noLog: boolean) => {
+			if (!noLog) {
+				provider.updateOutput('craveCloneList', 'Executing command: crave clone list');
+			}
 
 			exec('crave clone list', (error, stdout, stderr) => {
 				if (error) {

@@ -86,6 +86,22 @@
                 }
             case 'craveClone':
             case 'craveCloneDestroy':
+                {
+                    toggleProgressLine();
+
+                    let value = message.output;
+                    let parts = value.match(/.+(\n)+/g);
+                    
+                    if (parts && parts.length) {
+                        updateMessageView(message.output, true);
+                        toggleProgressLine();
+                        vscode.postMessage({ command: 'craveCloneList', noLog: true });
+                    }
+                    else {
+                        updateMessageView(message.output);
+                    }
+                    break;
+                }
             case 'openFolder':
             default: 
                 toggleProgressLine();
@@ -98,6 +114,7 @@
         
         if (container && message) {
             if (preformatted) {
+                container.textContent = '';
                 const pre = document.createElement('pre');
                 pre.textContent = message;
                 container.appendChild(pre);
@@ -115,9 +132,11 @@
 
     function updateListViews(rows, type, noOptions) {
         const view = document.querySelector(`.${type}-view`);
+        
         if (view && rows.length) {
             view.textContent = '';
-            
+            view.className = `${type}-view`;
+
             const defaultViewPara = document.querySelectorAll('.default-view p');
             
             for (const para of defaultViewPara) {
