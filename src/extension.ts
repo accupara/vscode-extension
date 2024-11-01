@@ -45,8 +45,14 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('craveDevspaces.craveClone', (projectId, destination) => {
-			let command = `crave clone create --projectID ${projectId} /crave-devspaces/${destination}`;
+		vscode.commands.registerCommand('craveDevspaces.craveClone', async (projectId, destination) => {
+			// Prompt for Destination Directory with default value
+            const destinationPath = await vscode.window.showInputBox({
+                prompt: `Enter destination directory (Path: /crave-devspaces/)`,
+                value: destination
+            });
+
+			let command = `crave clone create --projectID ${projectId} /crave-devspaces/${destinationPath}`;
 			
 			provider.updateOutput('craveClone', `Executing command: ${command}`);
 
