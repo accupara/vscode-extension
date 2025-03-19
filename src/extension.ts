@@ -70,7 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('craveDevspaces.craveCloneDestroy', (destination) => {
-			let command = `crave clone destroy -y /crave-devspaces/${destination}`;
+			let command = `crave clone destroy -y ${destination}`;
 			
 			provider.updateOutput('craveCloneDestroy', `Executing command: ${command}`);
 

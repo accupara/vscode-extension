@@ -186,12 +186,8 @@
                     }
                     else if (type === 'clone') {
                         cloneButton.addEventListener('click', () => {
-                            let 
-                                parts = row[2].split('/'),
-                                dest = parts[parts.length-1];
-
                             toggleProgressLine(true);
-                            vscode.postMessage({ command: 'craveCloneDestroy', destination: dest });
+                            vscode.postMessage({ command: 'craveCloneDestroy', destination: row[2] });
                         });
 
                         const openButton = document.createElement('button');
