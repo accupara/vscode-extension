@@ -18,10 +18,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 			exec('crave clone list', (error, stdout, stderr) => {
 				if (error) {
-					// console.error(error);
+					vscode.window.showErrorMessage(stderr);
 					provider.updateOutput('craveCloneList', stderr);
 				} else {
-					// console.log(stdout);
 					provider.updateOutput('craveCloneList', stdout);
 				}
 			});
@@ -34,10 +33,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 			exec('crave list', (error, stdout, stderr) => {
 				if (error) {
-					// console.error(error);
+					vscode.window.showErrorMessage(stderr);
 					provider.updateOutput('craveList', stderr);
 				} else {
-					// console.log(stdout);
 					provider.updateOutput('craveList', stdout);
 				}
 			});
@@ -58,10 +56,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 			exec(command, (error, stdout, stderr) => {
 				if (error) {
-					// console.error(error);
+					vscode.window.showErrorMessage(stderr);
 					provider.updateOutput('craveClone', stderr);
 				} else {
-					// console.log(stdout);
 					provider.updateOutput('craveClone', stdout);
 				}
 			});
@@ -76,10 +73,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 			exec(command, (error, stdout, stderr) => {
 				if (error) {
-					// console.error(error);
+					vscode.window.showErrorMessage(stderr);
 					provider.updateOutput('craveCloneDestroy', stderr);
 				} else {
-					// console.log(stdout);
 					provider.updateOutput('craveCloneDestroy', stdout);
 				}
 			});
