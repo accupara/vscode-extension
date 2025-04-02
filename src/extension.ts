@@ -91,6 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.commands.executeCommand('vscode.openFolder', folderUri, false);
 				vscode.commands.executeCommand('workbench.view.explorer');
 			} catch (err:any) {
+				vscode.window.showErrorMessage(err);
 				provider.updateOutput('openFolder', err);
 			}
 		})
