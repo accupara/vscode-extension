@@ -10,4 +10,4 @@ The extension allows Crave Devspace users to manage their project clones.
 
 <br />
 
-![Crave Devspaces Extension Sidebar View](resources/screenshot1.png)
+![Crave Devspaces Extension Sidebar View](https://raw.githubusercontent.com/accupara/vscode-extension/main/resources/screenshot1.png)
